@@ -197,7 +197,7 @@ thread 'fly-v1'
 
     6@ = 0.0
 
-jump @loop
+    jump @loop
 
 
 
@@ -252,4 +252,4 @@ jump @loop
         0604: get_Z_angle_for_point 5@ 6@ store_to 7@
     end
 
-jump @mid_loop
+    jump @mid_loop

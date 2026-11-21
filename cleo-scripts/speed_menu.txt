@@ -19,92 +19,92 @@ thread 'speedmenu'
 
 :animation_loop
 
-wait 0
+    wait 0
 
 
-// Run Animations
-if
-    0611: actor $PLAYER_ACTOR performing_animation "RUN_PLAYER"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "RUN_PLAYER" at 5@ times_normal_rate
-end
+    // Run Animations
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "RUN_PLAYER"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "RUN_PLAYER" at 5@ times_normal_rate
+    end
 
-if
-    0611: actor $PLAYER_ACTOR performing_animation "MUSCLERUN"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "MUSCLERUN" at 5@ times_normal_rate
-end
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "MUSCLERUN"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "MUSCLERUN" at 5@ times_normal_rate
+    end
 
-if
-    0611: actor $PLAYER_ACTOR performing_animation "FATRUN"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "FATRUN" at 5@ times_normal_rate
-end
-
-
-// Sprint Animations
-if
-    0611: actor $PLAYER_ACTOR performing_animation "SPRINT_CIVI"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "SPRINT_CIVI" at 6@ times_normal_rate
-end
-
-if
-    0611: actor $PLAYER_ACTOR performing_animation "MUSCLESPRINT"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "MUSCLESPRINT" at 6@ times_normal_rate
-end
-
-if
-    0611: actor $PLAYER_ACTOR performing_animation "FATSPRINT"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "FATSPRINT" at 6@ times_normal_rate
-end
-
-if
-    0611: actor $PLAYER_ACTOR performing_animation "SWIM_CRAWL"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "SWIM_CRAWL" at 6@ times_normal_rate
-end
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "FATRUN"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "FATRUN" at 5@ times_normal_rate
+    end
 
 
-// Heavy Run Animations
-if
-    0611: actor $PLAYER_ACTOR performing_animation "RUN_CSAW"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "RUN_CSAW" at 7@ times_normal_rate
-end
+    // Sprint Animations
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "SPRINT_CIVI"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "SPRINT_CIVI" at 6@ times_normal_rate
+    end
 
-if
-    0611: actor $PLAYER_ACTOR performing_animation "RUN_ROCKET"
-then
-    0393: actor $PLAYER_ACTOR perform_animation "RUN_ROCKET" at 7@ times_normal_rate
-end
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "MUSCLESPRINT"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "MUSCLESPRINT" at 6@ times_normal_rate
+    end
 
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "FATSPRINT"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "FATSPRINT" at 6@ times_normal_rate
+    end
 
-if
-    0ADC: test_cheat "prun"
-then
-    1@ = 0
-    jump @open_menu
-end
-
-if
-    0ADC: test_cheat "pfrun"
-then
-    1@ = 1
-    jump @open_menu
-end
-
-if
-    0ADC: test_cheat "phrun"
-then
-    1@ = 2
-    jump @open_menu
-end
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "SWIM_CRAWL"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "SWIM_CRAWL" at 6@ times_normal_rate
+    end
 
 
-jump @animation_loop
+    // Heavy Run Animations
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "RUN_CSAW"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "RUN_CSAW" at 7@ times_normal_rate
+    end
+
+    if
+        0611: actor $PLAYER_ACTOR performing_animation "RUN_ROCKET"
+    then
+        0393: actor $PLAYER_ACTOR perform_animation "RUN_ROCKET" at 7@ times_normal_rate
+    end
+
+
+    if
+        0ADC: test_cheat "prun"
+    then
+        1@ = 0
+        jump @open_menu
+    end
+
+    if
+        0ADC: test_cheat "pfrun"
+    then
+        1@ = 1
+        jump @open_menu
+    end
+
+    if
+        0ADC: test_cheat "phrun"
+    then
+        1@ = 2
+        jump @open_menu
+    end
+
+
+    jump @animation_loop
 
 
 
@@ -116,10 +116,10 @@ jump @animation_loop
 
 :open_menu
 
-Player.CanMove($PLAYER_CHAR) = False
-01B9: set_actor $PLAYER_ACTOR armed_weapon_to 0
+    Player.CanMove($PLAYER_CHAR) = False
+    01B9: set_actor $PLAYER_ACTOR armed_weapon_to 0
 
-jump @menu
+    jump @menu
 
 
 
@@ -130,115 +130,112 @@ jump @menu
 
 
 :menu
-wait 0
+    wait 0
 
-// === DISPLAY ===
-if
-    1@ == 0
-then
+    // === DISPLAY ===
     if
-        2@ == 0
+        1@ == 0
     then
-        0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
+        if
+            2@ == 0
+        then
+            0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
+        end
+
+        if
+            2@ == 1
+        then
+            0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        end
+
+        if
+            2@ == 2
+        then
+            0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
+        end
     end
 
     if
-        2@ == 1
+        1@ == 1
     then
-        0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        if
+            2@ == 0
+        then
+            0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
+        end
+
+        if
+            2@ == 1
+        then
+            0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        end
+
+        if
+            2@ == 2
+        then
+            0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
+        end
     end
 
     if
-        2@ == 2
+        1@ == 2
     then
-        0AD1: show_formatted_text_highpriority "~w~RUNNING SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
-    end
-end
+        if
+            2@ == 0
+        then
+            0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
+        end
 
-if
-    1@ == 1
-then
-    if
-        2@ == 0
-    then
-        0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
-    end
+        if
+            2@ == 1
+        then
+            0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        end
 
-    if
-        2@ == 1
-    then
-        0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        if
+            2@ == 2
+        then
+            0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
+        end
     end
+    // === DISPLAY === *
 
-    if
-        2@ == 2
-    then
-        0AD1: show_formatted_text_highpriority "~w~SPRINTING SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
-    end
-end
-
-if
-    1@ == 2
-then
-    if
-        2@ == 0
-    then
-        0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~g~1. Normal~n~ ~y~2. Fast~n~ ~y~3. Faster" time 1000
-    end
 
     if
-        2@ == 1
+        0AB0: key_pressed 38 // up arrow key
     then
-        0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~y~1. Normal~n~ ~g~2. Fast~n~ ~y~3. Faster" time 1000
+        2@ -= 1
+
+        if
+            2@ < 0
+        then
+            2@ = 2
+        end
+
+        jump @wait_navigation
     end
 
     if
-        2@ == 2
+        0AB0: key_pressed 40 // down arrow key
     then
-        0AD1: show_formatted_text_highpriority "~w~HEAVY RUN SPEED~n~ ~y~1. Normal~n~ ~y~2. Fast~n~ ~g~3. Faster" time 1000
+        2@ += 1
+
+        if
+            2@ > 2
+        then
+            2@ = 0
+        end
+
+        jump @wait_navigation
     end
-end
-// === DISPLAY === *
-
-
-// Move up
-if
-    0AB0: key_pressed 38
-then
-    2@ -= 1
 
     if
-        2@ < 0
+        0AB0: key_pressed 16 // sprint
     then
-        2@ = 2
+        jump @close_menu
     end
 
-    jump @wait_navigation
-end
-
-// Move down
-if
-    0AB0: key_pressed 40
-then
-    2@ += 1
-
-    if
-        2@ > 2
-    then
-        2@ = 0
-    end
-
-    jump @wait_navigation
-end
-
-// Sprint selects
-if
-    0AB0: key_pressed 16
-then
-    jump @close_menu
-end
-
-jump @menu
+    jump @menu
 
 
 
@@ -249,16 +246,17 @@ jump @menu
 
 
 :wait_navigation
-wait 100
 
-if or
-    0AB0: key_pressed 38 // Up
-    0AB0: key_pressed 40 // Down
-then
-    jump @wait_navigation
-end
+    wait 100
 
-jump @menu
+    if or
+        0AB0: key_pressed 38 // Up
+        0AB0: key_pressed 40 // Down
+    then
+        jump @wait_navigation
+    end
+
+    jump @menu
 
 
 
@@ -269,78 +267,78 @@ jump @menu
 
 
 :close_menu
-Player.CanMove($PLAYER_CHAR) = True
+    Player.CanMove($PLAYER_CHAR) = True
 
-if
-    2@ == 0
-then
     if
-        1@ == 0
+        2@ == 0
     then
-       5@ = 1.0
+        if
+            1@ == 0
+        then
+        5@ = 1.0
+        end
+
+        if
+            1@ == 1
+        then
+        6@ = 1.0
+        end
+
+        if
+            1@ == 2
+        then
+        7@ = 1.0
+        end
+
+        0ACA: show_text_box "SPEED NORMAL!"
     end
 
     if
-        1@ == 1
+        2@ == 1
     then
-       6@ = 1.0
+        if
+            1@ == 0
+        then
+        5@ = 1.5
+        end
+
+        if
+            1@ == 1
+        then
+        6@ = 3.0
+        end
+
+        if
+            1@ == 2
+        then
+        7@ = 2.0
+        end
+
+        0ACA: show_text_box "SPEED FAST!"
     end
 
     if
-        1@ == 2
+        2@ == 2
     then
-       7@ = 1.0
+        if
+            1@ == 0
+        then
+        5@ = 2.0
+        end
+
+        if
+            1@ == 1
+        then
+        6@ = 10.0
+        end
+
+        if
+            1@ == 2
+        then
+        7@ = 3.0
+        end
+
+        0ACA: show_text_box "SPEED FASTER!"
     end
 
-    0ACA: show_text_box "SPEED NORMAL!"
-end
-
-if
-    2@ == 1
-then
-    if
-        1@ == 0
-    then
-       5@ = 1.5
-    end
-
-    if
-        1@ == 1
-    then
-       6@ = 3.0
-    end
-
-    if
-        1@ == 2
-    then
-       7@ = 2.0
-    end
-
-    0ACA: show_text_box "SPEED FAST!"
-end
-
-if
-    2@ == 2
-then
-    if
-        1@ == 0
-    then
-       5@ = 2.0
-    end
-
-    if
-        1@ == 1
-    then
-       6@ = 10.0
-    end
-
-    if
-        1@ == 2
-    then
-       7@ = 3.0
-    end
-
-    0ACA: show_text_box "SPEED FASTER!"
-end
-
-jump @animation_loop
+    jump @animation_loop
