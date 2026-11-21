@@ -1,0 +1,58 @@
+{$CLEO .cs}
+
+thread 'switchchar'
+
+1@ = 0
+
+
+
+
+
+
+
+
+
+:switch_model
+
+wait 100
+
+if
+    0ADC: test_cheat "john"
+then
+    1@ = 0
+    jump @load_model
+end
+
+if
+    0ADC: test_cheat "bunny"
+then
+    1@ = 263
+    jump @load_model
+end
+
+if
+    0ADC: test_cheat "sera"
+then
+    1@ = 264
+    jump @load_model
+end
+
+jump @switch_model
+
+
+
+
+
+
+
+
+:load_model
+
+Model.Load(1@)
+038B: load_requested_models
+09C7: change_player $PLAYER_CHAR model_to 1@
+wait 1000
+
+jump @switch_model
+
+

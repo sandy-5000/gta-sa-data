@@ -1,0 +1,18 @@
+{$CLEO .cs}
+
+thread 'carspawns'
+
+:car_spawns
+
+wait 100
+
+if
+    0ADC: test_cheat "sand"
+then
+    0ADD: spawn_car_with_model 541 like_a_cheat // bullet
+    0ACA: show_text_box 'Car Spawned'
+    wait 1000
+end
+
+jump @car_spawns
+

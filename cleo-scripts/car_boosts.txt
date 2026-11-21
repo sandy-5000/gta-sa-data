@@ -1,0 +1,41 @@
+{$CLEO .cs}
+
+thread 'carboost'
+
+:car_boost
+
+wait 50
+
+0@ = Actor.CurrentCar($PLAYER_ACTOR)
+
+if and
+    0449:	actor $PLAYER_ACTOR in_a_car
+    0AB0:	key_pressed 82
+then
+    car.SetSpeedInstantly(0@, 10000.0)
+end
+
+if and
+    0449:	actor $PLAYER_ACTOR in_a_car
+    0AB0:	key_pressed 84
+then
+    car.SetSpeedInstantly(0@, 250.0)
+end
+
+if and
+    0449:	actor $PLAYER_ACTOR in_a_car
+    0AB0:	key_pressed 71
+then
+    car.SetSpeedInstantly(0@, 100.0)
+end
+
+if and
+    0449:	actor $PLAYER_ACTOR in_a_car
+    0AB0:	key_pressed 72
+then
+    car.SetSpeedInstantly(0@, 10.0)
+end
+
+jump @car_boost
+
+

@@ -1,0 +1,30 @@
+{$CLEO .cs}
+
+thread 'misccheats'
+
+:misc_cheats
+wait 100
+
+if
+    0ADC: test_cheat "ain"
+then
+    01B6: set_weather 8
+    0ACA: show_text_box 'Rainy'
+    wait 1000
+end
+
+if
+    0ADC: test_cheat "flameon"
+then
+    066A: 21@ = attach_particle "FIRE_BIKE" to_actor $PLAYER_ACTOR with_offset 0.0 0.0 0.0 rotation 0.0 0.0 0.0 type 2
+    064C: make_particle 21@ visible
+end
+
+if
+    0ADC: test_cheat "off"
+then
+    0650: destroy_particle 21@
+end
+
+jump @misc_cheats
+
