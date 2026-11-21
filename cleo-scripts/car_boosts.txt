@@ -1,6 +1,6 @@
 {$CLEO .cs}
 
-thread 'carboost'
+thread 'car-boost'
 
 :car_boost
 

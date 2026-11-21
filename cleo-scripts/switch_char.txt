@@ -1,16 +1,8 @@
 {$CLEO .cs}
 
-thread 'switchchar'
+thread 'switch-char'
 
 1@ = 0
-
-
-
-
-
-
-
-
 
 :switch_model
 
@@ -54,5 +46,3 @@ Model.Load(1@)
 wait 1000
 
 jump @switch_model
-
-

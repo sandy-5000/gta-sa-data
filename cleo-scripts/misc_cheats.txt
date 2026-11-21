@@ -1,6 +1,6 @@
 {$CLEO .cs}
 
-thread 'misccheats'
+thread 'misc-cheats'
 
 :misc_cheats
 wait 100

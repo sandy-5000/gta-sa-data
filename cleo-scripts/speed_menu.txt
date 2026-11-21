@@ -1,6 +1,6 @@
 {$CLEO .cs}
 
-thread 'speedmenu'
+thread 'speed-menu'
 
 1@ = 0   // menu selected
 2@ = 0   // option selected

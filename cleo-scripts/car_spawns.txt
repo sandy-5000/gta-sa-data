@@ -1,6 +1,6 @@
 {$CLEO .cs}
 
-thread 'carspawns'
+thread 'car-spawns'
 
 :car_spawns
 
