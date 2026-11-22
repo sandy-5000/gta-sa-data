@@ -36,6 +36,20 @@ then
     jump @load_special_model
 end
 
+if
+    0ADC: test_cheat "layla"
+then
+    1@ = 300
+    jump @load_model
+end
+
+if
+    0ADC: test_cheat "pony"
+then
+    1@ = 301
+    jump @load_model
+end
+
 jump @switch_model
 
 
@@ -50,7 +64,15 @@ jump @switch_model
 
     Model.Load(1@)
     038B: load_requested_models
-    09C7: change_player $PLAYER_CHAR model_to 1@
+
+    if
+        Model.Available(1@)
+    then
+        09C7: change_player $PLAYER_CHAR model_to 1@
+        0ACA: show_text_box 'MODEL SWITCHED'
+    else
+        0ACA: show_text_box 'MODEL NOT FOUND'
+    end
 
     wait 1000
 
