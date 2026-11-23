@@ -1,0 +1,16 @@
+{$CLEO .cs}
+
+thread 'stay-on-bike'
+
+:stay_on_bike
+
+wait 0
+
+if and
+    Player.Defined($PLAYER_CHAR)
+    Actor.Driving($PLAYER_ACTOR)
+else_jump @stay_on_bike
+
+08C6: set_actor $PLAYER_ACTOR stay_on_bike 1
+
+jump @stay_on_bike
