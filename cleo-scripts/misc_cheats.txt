@@ -27,4 +27,3 @@ then
 end
 
 jump @misc_cheats
-

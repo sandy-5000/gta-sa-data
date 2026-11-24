@@ -39,14 +39,14 @@ end
 if
     0ADC: test_cheat "layla"
 then
-    1@ = 300
+    1@ = 398
     jump @load_model
 end
 
 if
     0ADC: test_cheat "pony"
 then
-    1@ = 301
+    1@ = 399
     jump @load_model
 end
 
