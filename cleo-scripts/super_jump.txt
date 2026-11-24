@@ -1,0 +1,85 @@
+{$CLEO .cs}
+
+thread 'super-jump'
+
+:super_jump
+
+    wait 100
+
+    if and
+        0611:   actor $PLAYER_ACTOR performing_animation "SPRINT_CIVI"
+        0AB0:   key_pressed 71 // G
+    else_jump @super_jump
+
+    1@ = 60.0                       // Speed
+    9@ = 30.0                       // speed step
+
+    :count_loop
+
+    wait 250
+
+    if and
+        0611:   actor $PLAYER_ACTOR performing_animation "SPRINT_CIVI"
+        0AB0:   key_pressed 71 // G
+        1@ < 150.0
+    then
+        005B: 1@ += 9@
+        jump @count_loop
+    end
+
+    // Will be assigned relative speeds after calculation
+    2@ = 0.0                        // Speed X
+    3@ = 0.0                        // Speed Y
+    4@ = 0.0                        // Speed Z
+
+    5@ = 45.0                       // X pitch (up/down)
+    6@ = Actor.Angle($PLAYER_ACTOR) // Z yam   (left/right)
+
+    083E: set_actor $PLAYER_ACTOR rotation 5@ 0.0 6@ while_in_air
+
+    7@ = 90.0
+    005B: 7@ += 6@
+
+    02F7: 2@ = cosine 7@
+    02F6: 3@ = sine 7@
+    006B: 2@ *= 1@
+    006B: 3@ *= 1@
+    02F6: 4@ = sine 5@
+    006B: 4@ *= 1@
+    02F7: 8@ = cosine 5@
+    006B: 2@ *= 8@
+    006B: 3@ *= 8@
+
+    for 0@ = 0 to 6
+        if
+            not Actor.Animation($PLAYER_ACTOR) == "FALL_SKYDIVE"
+        then
+            04ED: load_animation "PARACHUTE"
+            0812: AS_actor $PLAYER_ACTOR perform_animation "FALL_SKYDIVE" IFP "PARACHUTE" framedelta 1.0 loopA 1 lockX 0 lockY 0 lockF 1 time -1
+        end
+        083C: set_actor $PLAYER_ACTOR velocity_in_direction_XYZ  2@ 3@ 4@
+        wait 100
+    end
+
+    :wait_for_ground
+    wait 100
+
+    if
+        not Actor.Animation($PLAYER_ACTOR) == "FALL_SKYDIVE"
+    then
+        04ED: load_animation "PARACHUTE"
+        0812: AS_actor $PLAYER_ACTOR perform_animation "FALL_SKYDIVE" IFP "PARACHUTE" framedelta 1.0 loopA 1 lockX 0 lockY 0 lockF 1 time -1
+    end
+
+    0819: 9@ = actor $PLAYER_ACTOR distance_from_ground
+    if and
+        9@ > 1.25
+        84AD: not actor $PLAYER_ACTOR in_water
+    then
+        jump @wait_for_ground
+    end
+
+    0687: clear_actor $PLAYER_ACTOR task
+
+    wait 1500
+    jump @super_jump
