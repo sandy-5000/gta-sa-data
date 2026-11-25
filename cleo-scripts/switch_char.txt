@@ -3,6 +3,7 @@
 thread 'switch-char'
 
 1@ = 0
+2@ = 0
 
 :switch_model
 
@@ -39,15 +40,22 @@ end
 if
     0ADC: test_cheat "layla"
 then
-    1@ = 398
-    jump @load_model
+    2@ = 1
+    jump @load_custom_model
 end
 
 if
     0ADC: test_cheat "pony"
 then
-    1@ = 399
-    jump @load_model
+    2@ = 2
+    jump @load_custom_model
+end
+
+if
+    0ADC: test_cheat "kgirl"
+then
+    2@ = 3
+    jump @load_custom_model
 end
 
 jump @switch_model
@@ -75,6 +83,62 @@ jump @switch_model
     end
 
     wait 1000
+
+    jump @switch_model
+
+
+
+
+
+
+
+
+
+:load_custom_model
+    // Always keep the model name of max 7 chars or else game crashes
+
+    if
+        2@ == 1
+    then
+        023C: load_special_actor 'LAYLAEG' as 1
+        jump @switch_to_model
+    end
+
+    if
+        2@ == 2
+    then
+        023C: load_special_actor 'PONYGRL' as 1
+        jump @switch_to_model
+    end
+
+    if
+        2@ == 3
+    then
+        023C: load_special_actor 'COWGIRL' as 1
+        jump @switch_to_model
+    end
+
+    jump @switch_model
+
+    :switch_to_model
+
+    038B: load_requested_models
+
+    :wait_model
+    wait 0
+
+    if
+        823D: not special_actor 1 loaded
+    then
+        jump @wait_model
+    end
+
+    09C7: change_player $PLAYER_CHAR model_to 290
+
+    0296: unload_special_actor 1
+    0ACA: show_text_box 'CUSTOM MODEL'
+
+    wait 500
 
     jump @switch_model
 
