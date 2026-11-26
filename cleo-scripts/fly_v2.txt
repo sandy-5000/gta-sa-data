@@ -1,0 +1,234 @@
+{$CLEO .cs}
+
+thread 'fly-v1'
+
+:fly
+
+    wait 100
+    Actor.SetImmunities($PLAYER_ACTOR, 1, 1, 1, 1, 1)
+
+    if and
+        0AB0:   key_pressed 66 // B
+        0AB0:   key_pressed 32 // Space
+    else_jump @fly
+
+    0ACA: show_text_box 'FLY ACTIVATED'
+    wait 100
+
+    jump @init
+
+
+
+
+
+
+
+
+
+:init
+
+    1@ = 50.0                       // Speed
+
+    // Will be assigned relative speeds after calculation
+    2@ = 0.0                        // Speed X
+    3@ = 0.0                        // Speed Y
+    4@ = 0.0                        // Speed Z
+
+    5@ = 0.0                        // X pitch (up/down)
+    6@ = 0.0                        // y roll  (tilt/barrel)
+    7@ = Actor.Angle($PLAYER_ACTOR) // Z yam   (left/right)
+    8@ = 3.0                        // delta(roll/pitch) - Omega
+    9@ = 40.0                       // tile angle
+
+    10@ = 90.0                      // Angle adjustment btw yam and speed
+
+    11@ = 0.0                       // Temp pitch cos angle
+    12@ = 0                         // Mouse flag
+
+    // Temp variable for reading the current direction
+    13@ = 0.0                       // X pitch
+    14@ = 0.0                       // Y roll
+    15@ = 0.0                       // Z yam
+    16@ = 0.0                       // X pitch (proxy for 5@)
+
+    $FLY_VERSION = 2
+
+    04ED: load_animation "PARACHUTE"
+
+    wait 100
+    083C: set_actor $PLAYER_ACTOR velocity_in_direction_XYZ 0.0 0.0 100.0
+
+    wait 100
+    083E: set_actor $PLAYER_ACTOR rotation 0.0 0.0 7@ while_in_air
+    0687: clear_actor $PLAYER_ACTOR task
+
+    jump @loop
+
+
+
+
+
+
+
+
+
+:loop
+    wait 0
+
+    if or
+        0AB0:   key_pressed 71 // G
+        not $FLY_VERSION == 2
+    then
+        0687: clear_actor $PLAYER_ACTOR task
+        Actor.Angle($PLAYER_ACTOR) = 7@
+
+        wait 100
+        0ACA: show_text_box 'FLY DEACTIVATED'
+        04ED: load_animation "PARACHUTE"
+        0812: AS_actor $PLAYER_ACTOR perform_animation "FALL_SKYDIVE" IFP "PARACHUTE" framedelta 1.0 loopA 1 lockX 0 lockY 0 lockF 1 time -1
+        0687: clear_actor $PLAYER_ACTOR task
+
+        jump @fly
+    end
+
+    01B9: set_actor $PLAYER_ACTOR armed_weapon_to 0
+
+    if
+        not Actor.Animation($PLAYER_ACTOR) == "FALL_SKYDIVE_ACCEL"
+    then
+        04ED: load_animation "PARACHUTE"
+        0812: AS_actor $PLAYER_ACTOR perform_animation "FALL_SKYDIVE_ACCEL" IFP "PARACHUTE" framedelta 1.0 loopA 1 lockX 0 lockY 0 lockF 1 time -1
+    end
+
+    if or
+        0AB0:   key_pressed 37 // left arrow
+        0AB0:   key_pressed 65 // A
+    then
+        005B: 7@ += 8@
+        0063: 6@ -= 9@
+    end
+
+    if or
+        0AB0:   key_pressed 39 // right arrow
+        0AB0:   key_pressed 68 // D
+    then
+        0063: 7@ -= 8@
+        005B: 6@ += 9@
+    end
+
+    if or
+        0AB0:   key_pressed 38 // up arrow
+        0AB0:   key_pressed 87 // W
+    then
+        if
+            5@ > -85.0
+        then
+            0063: 5@ -= 8@
+        else
+           5@ = -85.0
+        end
+    end
+
+    if or
+        0AB0:   key_pressed 40 // down arrow
+        0AB0:   key_pressed 83 // S
+    then
+        if
+            5@ < 85.0
+        then
+            005B: 5@ += 8@
+        else
+            5@ = 85.0
+        end
+    end
+
+
+    if
+        0AB0:   key_pressed 49 // num row 1
+    then
+        1@ = 50.0
+        8@ = 3.0
+        9@ = 40.0
+        0ACA: show_text_box 'SPEED: 50'
+    end
+
+    if
+        0AB0:   key_pressed 50 // num row 2
+    then
+        1@ = 100.0
+        8@ = 4.0
+        9@ = 45.0
+        0ACA: show_text_box 'SPEED: 100'
+    end
+
+    if
+        0AB0:   key_pressed 51 // num row 3
+    then
+        1@ = 150.0
+        8@ = 5.0
+        9@ = 50.0
+        0ACA: show_text_box 'SPEED: 150'
+    end
+
+    if
+        0AB0:   key_pressed 53 // num row 5
+    then
+        12@ = 1
+        0ACA: show_text_box 'MOUSE FLY: ON'
+    end
+
+    if
+        0AB0:   key_pressed 54 // num row 6
+    then
+        12@ = 0
+        0ACA: show_text_box 'MOUSE FLY: OFF'
+    end
+
+    if or
+        0AB0:   key_pressed 70 // F
+        12@ == 1
+    then
+        068D: get_camera_position_to 13@ 14@ 15@
+        068E: get_camera_target_point_to 16@ 6@ 7@
+        0063: 16@ -= 13@
+        0063: 6@ -= 14@
+        0604: get_Z_angle_for_point 16@ 6@ store_to 7@
+    end
+
+
+    if
+        0AB0:   key_pressed 16 // sprint
+    then
+        5@ = 0.0
+    end
+
+    if
+        0AB0:   key_pressed 32 // space
+    then
+        1@ = 10.0
+        8@ = 5.0
+        9@ = 30.0
+        0ACA: show_text_box 'SPEED: 10'
+    end
+
+
+    10@ = 90.0
+    005B: 10@ += 7@
+
+    083E: set_actor $PLAYER_ACTOR rotation 5@ 6@ 7@ while_in_air
+
+    02F7: 2@ = cosine 10@
+    02F6: 3@ = sine 10@
+    006B: 2@ *= 1@
+    006B: 3@ *= 1@
+    02F6: 4@ = sine 5@
+    006B: 4@ *= 1@
+    02F7: 11@ = cosine 5@
+    006B: 2@ *= 11@
+    006B: 3@ *= 11@
+
+    083C: set_actor $PLAYER_ACTOR velocity_in_direction_XYZ  2@ 3@ 4@
+
+    6@ = 0.0
+
+    jump @loop
