@@ -7,10 +7,18 @@ thread 'car-spawns'
 wait 100
 
 if
-    0ADC: test_cheat "sand"
+    0ADC: test_cheat "bull"
 then
     0ADD: spawn_car_with_model 541 like_a_cheat // bullet
-    0ACA: show_text_box 'Car Spawned'
+    0ACA: show_text_box 'CAR SPAWNED'
+    wait 1000
+end
+
+if
+    0ADC: test_cheat "stal"
+then
+    0ADD: spawn_car_with_model 439 like_a_cheat // Stallion
+    0ACA: show_text_box 'CAR SPAWNED'
     wait 1000
 end
 
