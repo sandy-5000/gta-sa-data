@@ -17,20 +17,6 @@ then
 end
 
 if
-    0ADC: test_cheat "bunny"
-then
-    1@ = 263
-    jump @load_model
-end
-
-if
-    0ADC: test_cheat "sera"
-then
-    1@ = 264
-    jump @load_model
-end
-
-if
     0ADC: test_cheat "kat"
 then
     1@ = 298
@@ -55,6 +41,13 @@ if
     0ADC: test_cheat "kgirl"
 then
     2@ = 3
+    jump @load_custom_model
+end
+
+if
+    0ADC: test_cheat "sera"
+then
+    2@ = 4
     jump @load_custom_model
 end
 
@@ -118,6 +111,13 @@ jump @switch_model
         jump @switch_to_model
     end
 
+    if
+        2@ == 4
+    then
+        023C: load_special_actor 'SERA' as 1
+        jump @switch_to_model
+    end
+
     jump @switch_model
 
     :switch_to_model
@@ -168,6 +168,8 @@ jump @switch_model
         end
 
         09C7: change_player $PLAYER_CHAR model_to 298
+
+        0ACA: show_text_box 'SPECIAL MODEL'
         jump @switch_model
     end
 
