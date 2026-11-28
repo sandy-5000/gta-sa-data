@@ -1,0 +1,17 @@
+{$CLEO .cs}
+
+thread 'regenerate'
+
+:regenerate
+
+wait 250
+
+1@ = Actor.Health($PLAYER_ACTOR)
+
+if 1@ < 200
+else_jump @regenerate
+
+000A: 1@ += 1
+Actor.Health($PLAYER_ACTOR) = 1@
+
+jump @regenerate
